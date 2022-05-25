@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  authCode  String
+  memos     Memo[]
+}
+
+model Memo {
+  id        Int      @id @default(autoincrement())
+  authorId    Int
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User?  @relation(fields: [authorId], references: [id])
+  files     File[]
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  memoId    Int
+  url       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  memo      Memo?    @relation(fields: [memoId], references: [id])
+}
