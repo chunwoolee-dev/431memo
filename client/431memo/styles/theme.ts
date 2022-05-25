@@ -1,0 +1,94 @@
+import { DefaultTheme } from "styled-components";
+
+const colors = {
+    primary : [
+        '#CCE2FE',
+        '#99C5F5',
+        '#66A7E4',
+        '#3387CB',
+        '#1167AB',
+        '#015495',
+        '#004079',
+        '#002B57',
+        '#00162F',
+    ],
+    secondary : [
+        '#FFFECC',
+        '#FFF899',
+        '#FFEC66',
+        '#FFDC41',
+        '#FFC72C',
+        '#CCA712',
+        '#998301',
+        '#665C00',
+        '#333000',
+    ],
+    tertiary : [
+        '#FFFFFF',
+        '#E0E4E6',
+        '#C1C8CD',
+        '#A3ADB3',
+        '#869198',
+        '#6A757C',
+        '#4F595F',
+        '#343C42',
+        '#1A2024',
+    ],
+    danger : [
+        '#FFCCCC',
+        '#FE9D99',
+        '#F77269',
+        '#EB4C40',
+        '#DA291C',
+        '#B8190D',
+        '#910C03',
+        '#650400',
+        '#330000',
+    ],
+    safe : [
+        '#CCEECC',
+        '#99DA99',
+        '#66C266',
+        '#33A733',
+        '#068906',
+        '#007400',
+        '#005C00',
+        '#004100',
+        '#002200',
+    ]
+}
+const common = {
+    media : {
+        'mobile' : '540px',
+        'stab' : '900px',
+        'btab' : '1240px',
+        'laptop' : '1800px',
+    },
+    space : {
+        's' : '4px',
+        'm' : '8px',
+        'b' : '16px'
+    },
+    border : [
+        `1px solid ${colors.tertiary[2]}`
+    ]
+}
+
+const Theme = {
+    light : {
+        color : colors.tertiary[8],
+        backgroundColor : colors.tertiary[0],
+        paper : colors.tertiary[1]
+    },
+    dark : {
+        color : colors.tertiary[0],
+        backgroundColor : colors.tertiary[8],
+        paper : colors.tertiary[7]
+    }
+}
+
+
+export const theme = {
+    light : Object.assign(Theme.light, { colors : colors }, common),
+    dark  : Object.assign(Theme.dark,  { colors : colors }, common)
+}
