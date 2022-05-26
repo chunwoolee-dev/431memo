@@ -19,6 +19,7 @@ app.use(cookieParser())
 
 app.get('/auth', controllers.auth);
 
+app.post('/memo', controllers.addMemo);
 app.post('/login', controllers.loginOrSignup);
 app.post('/logout', controllers.logout);
 app.post('/memo/image', controllers.fileUploader, controllers.uploadMemoImage);
