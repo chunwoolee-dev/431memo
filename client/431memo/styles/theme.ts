@@ -83,12 +83,16 @@ const Theme = {
     dark : {
         color : colors.tertiary[0],
         backgroundColor : colors.tertiary[8],
-        paper : colors.tertiary[7]
+        paper : colors.tertiary[7],
+
+        border : [
+            `1px solid ${colors.tertiary[7]}`
+        ]
     }
 }
 
 
 export const theme = {
-    light : Object.assign(Theme.light, { colors : colors }, common),
-    dark  : Object.assign(Theme.dark,  { colors : colors }, common)
+    light : Object.assign({ colors : colors }, common, Theme.light),
+    dark  : Object.assign({ colors : colors }, common, Theme.dark)
 }

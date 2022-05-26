@@ -7,27 +7,28 @@ interface Props {
 const Button = styled.button<Props>`
     border:0; border-radius:9999px; width:100%; display:flex; justify-content:center; align-items:center; cursor:pointer;
     position:relative; overflow:hidden;
+    font-size:14px; user-select:none;
     background:${props => props.backgroundColor ? props.backgroundColor : props.theme.colors.tertiary[1]};
     color:${props => props.color ? props.color : props.theme.colors.tertiary[8]};
     padding:${props => props.theme.space.m} ${props => props.theme.space.b};
 
     > div.hover {
-        background:inherit; position:absolute; top:0; left:0; width:100%; height:100%; filter:contrast(0.75) brightness(2);
-        opacity:0; transition:opacity 0.34s, filter 0.16s;
+        background:inherit; position:absolute; top:0; left:0; width:100%; height:100%; filter:contrast(1) brightness(100%) opacity(0);
+        transition:opacity 0.34s, filter 0.16s; border-radius:9999px;
     }
     &:hover > div.hover {
-        opacity:0.4;
+        filter:contrast(1.5) brightness(100%) opacity(0.4);
     }
     &:active > div.hover {
-        filter:contrast(0.75) brightness(0.5);
+        filter:contrast(1) brightness(75%) opacity(0.7);
     }
 `
 
 const RadiusButton = (props:any) => {
     return (
         <Button type="button" onClick={props.onClick} backgroundColor={props.backgroundColor} color={props.color}>
-            {props.children}
             <div className="hover"></div>
+            {props.children}
         </Button>
     )
 }

@@ -8,7 +8,7 @@ import { theme } from '@styles/theme'
 function MyApp({ Component, pageProps: {session, ...pageProps} }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <ThemeProvider theme={theme.light}>
+      <ThemeProvider theme={theme.dark}>
         <GlobalStyle/>
         <Component {...pageProps} />
       </ThemeProvider>
