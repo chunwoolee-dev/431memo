@@ -1,20 +1,31 @@
 import axios from 'axios';
-import type { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import type { NextPage, NextPageContext } from 'next'
 
 const Home: NextPage = () => {
-    const code = useRouter().query.code;
+    return (
+        <></>
+    )
+}
+
+export async function getServerSideProps(context:NextPageContext) {
+    const code = context.query.code;
     const url = process.env.SERVER;
-    axios({
+    const res = await axios({
         url : `${url}/callback/google`,
         method : 'post',
         data : {
             code : code
         }
-    }).then(() => location.href='/');
-    return (
-        <></>
-    )
-}
+    });
+    return {
+        // props : {
+        //     test : 'good'
+        // }
+      redirect : {
+        destination : '/',
+        permanent : false
+      }
+    }
+  }
 
 export default Home
