@@ -7,7 +7,7 @@ const LoginModal = styled.div`
   height:640px;
   max-height:90%;
   padding:16px;
-  border-radius:32px;
+  border-radius:36px;
   background:${props => props.theme.backgroundColor};
   border:${props => props.theme.border[0]};
   position:absolute;
@@ -18,6 +18,7 @@ const LoginModal = styled.div`
   flex-direction:column;
   justify-content:center;
   align-items:center;
+  animation:bottom-to-up 0.64s;
   gap:${props => props.theme.space.m};
 
   > .title-section {
@@ -27,7 +28,13 @@ const LoginModal = styled.div`
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    gap:${props => props.theme.space.m};
+
+    > .material-symbols-outlined {
+      font-size:4em;
+    }
+  }
+  > .title-section.top {
+    justify-content:flex-start;
   }
 
   @media screen and (max-width:${props => props.theme.media.mobile}){
@@ -35,7 +42,13 @@ const LoginModal = styled.div`
     height:100%;
     max-height:100%;
     border-radius:0;
+    border:0;
     padding-bottom:calc(16px + env(safe-area-inset-bottom));
+  }
+
+  @keyframes bottom-to-up {
+    from { opacity:0; transform:translate(-50%, -45%); }
+    to   { opacity1;  transform:translate(-50%, -50%); }
   }
 `
 const ButtonStyle = styled.div`
@@ -44,7 +57,7 @@ const ButtonStyle = styled.div`
   justify-content:center;
   align-items:center;
   width:100%;
-  height:24px;
+  height:32px;
   font-weight:bold;
   gap:${props => props.theme.space.m};
   
@@ -56,14 +69,21 @@ const ButtonStyle = styled.div`
 `
 
 const Login = () => {
+  const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXTAUTH_URL}${process.env.GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
+  console.log(GOOGLE_LOGIN_URL, process.env.NEXTAUTH_URL, process.env.GOOGLE_REDIRECT_URI)
+  
   return (
     <div className="modal">
       <LoginModal>
         <div className="title-section">
+          <p className="material-symbols-outlined icon-48">description</p>
+        </div>
+        <div className="title-section top">
           <h1>431Memo</h1>
           <p>간단하게 메모하기</p>
         </div>
-        <RadiusButton onClick={() => signIn('google')}>
+        <RadiusButton onClick={() => location.href=GOOGLE_LOGIN_URL}>
+        {/* <RadiusButton onClick={() => signIn('google')}> */}
           <ButtonStyle>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">

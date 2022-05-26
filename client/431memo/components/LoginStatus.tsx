@@ -1,9 +1,9 @@
-import { signOut, useSession } from "next-auth/react";
-import Loading from "./Loading";
+import { useSession } from "next-auth/react";
 import Login from "@components/Login";
+import Home from "./Home";
 
 const LoginStatus = () => {
-    const {status} = useSession();
+    const {data, status} = useSession();
     switch (status) {
         case 'loading' :
             return (
@@ -15,10 +15,7 @@ const LoginStatus = () => {
             )
         case 'authenticated' :
             return (
-                <div>
-                    <p>로그아웃</p>
-                    <button type="button" onClick={() => signOut()}>로그아웃</button>
-                </div>
+                <Home/>
             )
     }
 }
