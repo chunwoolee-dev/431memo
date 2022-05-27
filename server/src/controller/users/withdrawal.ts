@@ -18,7 +18,6 @@ export async function withdrawal(req: Request, res: Response) {
     const userInfo = await prisma.user.findFirst({
         where: {
             email: email,
-            authCode: authCode,
         }
     })
 
@@ -30,7 +29,6 @@ export async function withdrawal(req: Request, res: Response) {
     await prisma.user.deleteMany({
         where: {
             email: req.body.email,
-            authCode: authCode,
         }
     })
 
