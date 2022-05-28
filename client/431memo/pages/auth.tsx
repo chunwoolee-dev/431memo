@@ -18,7 +18,8 @@ const Home: NextPage<Props> = (props) => {
           method : 'post',
           data : {
               code : code
-          }
+          },
+          withCredentials : true
       })
       .then(() => router.push("/"))
       .catch(() => router.push("/"));
