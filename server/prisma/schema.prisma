@@ -30,7 +30,7 @@ model Memo {
 model File {
   id        Int      @id @default(autoincrement())
   memoId    Int
-  url       String
+  url       String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   memo      Memo?    @relation(fields: [memoId], references: [id])
