@@ -25,6 +25,8 @@ app.post('/logout', controllers.logout);
 app.post('/memo/image', controllers.fileUploader, controllers.uploadMemoImage);
 app.post('/callback/google', controllers.googleCallback);
 
+app.patch('/memo', controllers.modifyMemo);
+
 app.delete('/withdrawal', controllers.withdrawal);
 app.delete('/memo', controllers.deleteMemo);
 

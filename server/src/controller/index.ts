@@ -4,6 +4,7 @@ import { deleteMemo } from './memo/deleteMemo'
 import { fileUploader } from './fileUploadFunctions'
 import { googleCallback } from './callback/google'
 import { logout } from './users/logout'
+import { modifyMemo } from './memo/modifyMemo'
 import { uploadMemoImage } from './memo/uploadMemoImage'
 import { withdrawal } from './users/withdrawal'
 
@@ -14,6 +15,7 @@ const controllers = {
     fileUploader,
     googleCallback,
     logout,
+    modifyMemo,
     uploadMemoImage,
     withdrawal,
 }
