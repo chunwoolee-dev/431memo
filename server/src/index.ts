@@ -10,6 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(
     cors({
+      exposedHeaders:['set-cookie'],
       origin: ['https://localhost:3000', 'https://memo.431web.com'],
       credentials: true,
       methods: ['GET','POST','PATCH','DELETE']

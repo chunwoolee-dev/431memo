@@ -1,7 +1,7 @@
 import axios from "axios"
 import { generateAccessToken } from "../tokenFunctions"
 import { prisma } from '../db'
-import { Request, Response } from 'express'
+import { Request, Response, CookieOptions} from 'express'
 
 export async function googleCallback (req: Request, res: Response) {
     
@@ -33,6 +33,11 @@ export async function googleCallback (req: Request, res: Response) {
         headers
     )).data
 
+    const cookieOptions:CookieOptions = {
+        sameSite: 'none',
+        secure: true,
+    }
+
     // 이미 가입되어있는지 체크한다.
     const userInfo = await prisma.user.findFirst({
         where: {
@@ -42,7 +47,7 @@ export async function googleCallback (req: Request, res: Response) {
     if (userInfo) {
         // jwt 토큰을 쿠키에 저장
         const accessToken = await generateAccessToken({email:email})
-        return res.cookie("jwt", accessToken).status(200).send()
+        return res.cookie("jwt", accessToken, cookieOptions).status(200).send()
     }
 
     // 회원가입 한다.
@@ -54,6 +59,6 @@ export async function googleCallback (req: Request, res: Response) {
 
     // jwt 토큰을 쿠키에 저장
     const accessToken = await generateAccessToken({email:email})
-    return res.cookie("jwt", accessToken).status(200).send()
+    return res.cookie("jwt", accessToken, cookieOptions).status(200).send()
 
 }
