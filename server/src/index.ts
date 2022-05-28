@@ -26,6 +26,7 @@ app.post('/memo/image', controllers.fileUploader, controllers.uploadMemoImage);
 app.post('/callback/google', controllers.googleCallback);
 
 app.delete('/withdrawal', controllers.withdrawal);
+app.delete('/memo', controllers.deleteMemo);
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 8080
 
