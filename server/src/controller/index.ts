@@ -6,6 +6,7 @@ import { googleCallback } from './callback/google'
 import { logout } from './users/logout'
 import { modifyMemo } from './memo/modifyMemo'
 import { uploadMemoImage } from './memo/uploadMemoImage'
+import { viewMemo } from './memo/viewMemo'
 import { withdrawal } from './users/withdrawal'
 
 const controllers = {
@@ -17,6 +18,7 @@ const controllers = {
     logout,
     modifyMemo,
     uploadMemoImage,
+    viewMemo,
     withdrawal,
 }
 
