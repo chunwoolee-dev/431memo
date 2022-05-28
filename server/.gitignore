@@ -2,3 +2,5 @@ node_modules
 prisma/migrations/
 .env
 dist
+cert.pem
+key.pem
