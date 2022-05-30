@@ -6,9 +6,9 @@ export async function addMemo (req: Request, res: Response) {
 
     const { title, context } = req.body
     // 변수가 없는 경우 에러 처리
-    if (!title)
+    if ( title === undefined )
         return res.status(400).send('title 변수가 없습니다.')
-    if (!context)
+    if ( context === undefined )
         return res.status(400).send('context 변수가 없습니다.')
 
     // 없는 경우 로그인이 안된 상태로 전달
