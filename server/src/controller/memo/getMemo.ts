@@ -22,13 +22,14 @@ export async function getMemo (req: Request, res: Response) {
 
     const { email } = getAccessTokenData(req.cookies.jwt)
 
-    // 요청한 유저가 가지고 있는 메모를 찾는다
+    // 요청한 유저가 가지고 있는 메모를 한개만 찾는다
     const userInfo = await prisma.user.findFirst({
         where: {
             email: email,
         },
         include: {
             memos: {
+                take:1,
                 where: {
                     id: Number(id)
                 }
@@ -39,12 +40,8 @@ export async function getMemo (req: Request, res: Response) {
     if (userInfo?.memos.length === 0)
         return res.status(403).send('메모가 없거나 요청한 유저의 메모가 아닙니다.')
 
-    // 필요한 속성만 뽑는다.
-    const memo = {
-        author: userInfo?.email,
-        title: userInfo?.memos[0].title,
-        context: userInfo?.memos[0].context
-    }
+    // 유저의 첫번째 메모만 가져온다.
+    const [ memo ] = userInfo?.memos || []
 
     return res.status(200).json(memo);
 }
