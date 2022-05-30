@@ -1,4 +1,3 @@
-import { signIn } from "next-auth/react";
 import styled from "styled-components";
 import RadiusButton from "./RadiusButton";
 
