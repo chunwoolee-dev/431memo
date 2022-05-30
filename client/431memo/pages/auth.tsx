@@ -1,7 +1,16 @@
+import Loading from '@components/Loading';
 import axios from 'axios';
 import type { NextPage, NextPageContext } from 'next'
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import styled from 'styled-components';
+
+const ProgressBar = styled.div`
+    position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+`
+const ProgressItem = styled.div`
+    width:48px; height:48px;
+`
 
 interface Props {
   code : string
@@ -25,15 +34,28 @@ const Home: NextPage<Props> = (props) => {
   }, []);
 
   return (
-      <></>
+    <ProgressBar>
+      <ProgressItem>
+        <Loading/>
+      </ProgressItem>
+    </ProgressBar>
   )
 }
 
 export async function getServerSideProps(context:NextPageContext) {
   const code = context.query.code;
-  return {
-    props : {
-        code : code
+  if(!code){
+    return {
+      redirect : {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }else{
+    return {
+      props : {
+          code : code
+      }
     }
   }
 }

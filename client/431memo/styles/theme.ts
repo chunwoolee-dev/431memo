@@ -71,7 +71,13 @@ const common = {
     },
     border : [
         `1px solid ${colors.tertiary[2]}`
-    ]
+    ],
+    animation : {
+        'fade-in' : `animation:fade-in 0.34s both;`,
+        'fade-out' : `animation:fade-out 0.34s both;`,
+        'bottom-to-top' : `animation:bottom-to-top 0.64s both;`,
+        'top-to-bottom' : `animation:top-to-bottom 0.34s both;`,
+    }
 }
 
 const Theme = {

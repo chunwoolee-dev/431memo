@@ -27,5 +27,12 @@ declare module "styled-components" {
     }
     border : Array<string>
 
+    animation : {
+      'fade-in' : string
+      'fade-out' : string
+      'bottom-to-top' : string
+      'top-to-bottom' : string
+    }
+
   }
 }

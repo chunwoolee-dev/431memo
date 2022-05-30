@@ -74,6 +74,7 @@ const Failed = styled.div`
   transform:translate(-50%, 0);
   padding:${props => props.theme.space.s};
   background:${props => props.theme.colors.danger[4]};
+  color:#fff;
   border-radius:${props => props.theme.space.s};
   font-weight:bold;
   animation:fade-in 0.34s 2s reverse both;
@@ -90,13 +91,12 @@ const Failed = styled.div`
   }
 `
 
-const Login = ({isFailed}:{isFailed:boolean}) => {
+const Login = () => {
   const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.GOOGLE_CLIENT_ID}&redirect_uri=${process.env.NEXTAUTH_URL}${process.env.GOOGLE_REDIRECT_URI}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email`;
   
   return (
     <div className="modal">
       <LoginModal>
-        {isFailed ? <Failed>로그인 실패</Failed> : ''}
         <div className="title-section">
           <p className="material-symbols-outlined icon-48">description</p>
         </div>

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useRouter } from "next/router";
 import styled, { useTheme } from "styled-components";
 import RadiusButton from "./RadiusButton";
@@ -24,29 +23,33 @@ const HeaderArea = styled.div`
     }
 `
 
-const Header = () => {
-    const router = useRouter();
+interface Props {
+    email:string
+    id:number
+    setUserInfo:Function
+}
+
+const Header = ({email, id, setUserInfo}:Props) => {
     const theme = useTheme();
+    const router = useRouter();
+    const reg = /\@gmail\.com$/;
+    const name  = reg.test(email) ? email.replace(reg,'') : email;
     return (
         <HeaderBlock>
             <HeaderSection>
                 <HeaderArea>
                     <div>
                         <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
-                            <p className="material-symbols-outlined">menu</p>
+                            <p className="material-symbols-outlined icon-16">menu</p>
                         </RadiusButton>
                     </div>
                 </HeaderArea>
                 <HeaderArea>
-                    이름
-                    <button type="button"   onClick={() => {
-                        axios({
-                            url:'/logout',
-                            method:'post'
-                        })
-                        .then(data => router.push('/'))
-                        .catch(data => alert('실패'))
-                    }}>로그아웃</button>
+                    <div>
+                        <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color} onClick={() => setUserInfo(true)}>
+                            {name}
+                        </RadiusButton>
+                    </div>
                 </HeaderArea>
             </HeaderSection>
         </HeaderBlock>

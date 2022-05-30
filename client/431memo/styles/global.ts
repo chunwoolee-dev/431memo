@@ -30,12 +30,59 @@ const GlobalStyle = createGlobalStyle`
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
 
+    .material-symbols-outlined.icon-16 {
+        font-size:16px;
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 16;
+    }
+    .material-symbols-outlined.icon-24 {
+        font-size:24px;
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
     .material-symbols-outlined.icon-48 {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
     }
 
     .modal {
         position:fixed; width:100%; height:100%; top:0; left:0;
+    }
+
+
+    @keyframes bottom-to-top {
+        from {
+          transform:translate(-50%, 50vh);
+          opacity:0;
+        }
+        to {
+          transform:translate(-50%, -50%);
+          opacity:1;
+        }
+    }
+    @keyframes top-to-bottom {
+        from {
+          transform:translate(-50%, -50%);
+          opacity:1;
+        }
+        to {
+          transform:translate(-50%, 50vh);
+          opacity:0;
+        }
+    }
+    @keyframes fade-in {
+        from {
+          opacity:0;
+        }
+        to {
+          opacity:1;
+        }
+    }
+    @keyframes fade-out {
+        from {
+          opacity:1;
+        }
+        to {
+          opacity:0;
+        }
     }
 `;
 
