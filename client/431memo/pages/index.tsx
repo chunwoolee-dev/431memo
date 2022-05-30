@@ -1,7 +1,6 @@
 import type { NextPage } from 'next'
 import LoginStatus from '@components/LoginStatus';
 import { useSession } from './api/session';
-import { useTheme } from 'styled-components';
 import UserInfo from '@components/UserInfo';
 import { useState } from 'react';
 
@@ -10,6 +9,7 @@ interface Props {
   name : {
     id : number
     email : string
+    picture : string
   },
   err : {
     isFailed : boolean
@@ -19,6 +19,7 @@ interface Props {
 
 const Home: NextPage<Props> = ({session, name, err}) => {
   const [isUserInfo, setUserInfo] = useState(false);
+  console.log(name);
   return (
     <>
       {isUserInfo ? <UserInfo session={session} name={name} err={err} setUserInfo={setUserInfo}/> : null}

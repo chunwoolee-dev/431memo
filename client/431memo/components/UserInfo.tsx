@@ -47,11 +47,27 @@ const MenuItem = styled.li`
     }
 `
 
+const Thumbnail = styled.div`
+    display:flex;
+    justify-content:center;
+    margin-bottom:${props => props.theme.space.b};
+
+    > img {
+        width:64px; height:64px; border-radius:50%;
+        border:${props => props.theme.border};
+    }
+
+    & + p {
+        font-size:12px;
+    }
+`
+
 interface Props {
     session : boolean
     name : {
         id : number
         email : string
+        picture : string
     }
     err : {
         isFailed : boolean
@@ -65,6 +81,9 @@ const UserInfo = function({session, name, err, setUserInfo}:Props){
     return (
         <Modal onClose={() => setUserInfo(false)}>
             <Wrapper>
+                <Thumbnail>
+                    <img src={name.picture} alt="프로필 사진"></img>
+                </Thumbnail>
                 <p>{name && name.email}</p>
             </Wrapper>
 
