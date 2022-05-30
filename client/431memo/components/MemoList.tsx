@@ -9,6 +9,7 @@ import RadiusButton from "./RadiusButton";
 const MemoListWrap = styled.div`
     position:relative;
     flex:1;
+    overflow-y:auto;
 `
 const LoadingWrap = styled.div`
     position:absolute;

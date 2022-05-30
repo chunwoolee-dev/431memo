@@ -31,6 +31,11 @@ const UserInfoWrap = styled.div`
     display:flex;
     align-items:center;
     gap:${props => props.theme.space.m};
+    > p {
+        @media screen and (max-width:${props => props.theme.media.min}){
+            display:none;
+        }
+    }
 `
 const Thumbnail = styled.img`
     width:24px; height:24px; border-radius:50%;
@@ -46,43 +51,41 @@ const Header = () => {
         <>
             {router.query['user-detail'] === 'true' ? <UserInfo/> : null}
             <HeaderBlock>
-            <HeaderSection>
-                <HeaderArea>
-                    {router.pathname === '/memo/[id]' ?
-                    <>
-                        <Link href="/">
-                            <div>
+                <HeaderSection>
+                    <HeaderArea>
+                        {router.pathname === '/memo/[id]' ?
+                        <>
+                            <div onClick={router.back}>
                                 <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
                                     <p className="material-symbols-outlined">keyboard_arrow_left</p>
                                 </RadiusButton>
                             </div>
-                        </Link>
-                    </>
-                    : null}
-                    <Title />
-                    {/* <div>
-                        <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
-                            <p className="material-symbols-outlined icon-16">menu</p>
-                        </RadiusButton>
-                    </div> */}
-                </HeaderArea>
-                <HeaderArea>
-                    <div>
-                        <Link href="?user-detail=true" as={router.asPath}>
+                        </>
+                        : null}
+                        <Title />
+                        {/* <div>
                             <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
-                                <UserInfoWrap>
-                                    <p>{user && user.name}</p>
-                                    { user ? 
-                                        <Thumbnail src={user.picture} alt="프로필 사진"/>
-                                        : null
-                                    }
-                                </UserInfoWrap>
+                                <p className="material-symbols-outlined icon-16">menu</p>
                             </RadiusButton>
-                        </Link>
-                    </div>
-                </HeaderArea>
-            </HeaderSection>
-        </HeaderBlock>
+                        </div> */}
+                    </HeaderArea>
+                    <HeaderArea>
+                        <div>
+                            <Link href="?user-detail=true" as={router.asPath}>
+                                <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
+                                    <UserInfoWrap>
+                                        <p>{user && user.name}</p>
+                                        { user ? 
+                                            <Thumbnail src={user.picture} alt="프로필 사진"/>
+                                            : null
+                                        }
+                                    </UserInfoWrap>
+                                </RadiusButton>
+                            </Link>
+                        </div>
+                    </HeaderArea>
+                </HeaderSection>
+            </HeaderBlock>
         </>
     )
 }

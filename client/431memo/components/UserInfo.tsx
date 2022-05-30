@@ -58,7 +58,11 @@ const Thumbnail = styled.div`
     }
 
     & + p {
-        font-size:12px;
+        text-align:center;
+        margin-bottom:${props => props.theme.space.s};
+        & + p {
+            font-size:12px;
+        }
     }
 `
 
@@ -72,6 +76,7 @@ const UserInfo = function(){
                 <Thumbnail>
                     <img src={user && user.picture} alt="프로필 사진"></img>
                 </Thumbnail>
+                <p>{user && user.name}</p>
                 <p>{user && user.email}</p>
             </Wrapper>
 
