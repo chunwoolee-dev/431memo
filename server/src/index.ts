@@ -32,6 +32,7 @@ app.patch('/memo', controllers.modifyMemo);
 
 app.delete('/withdrawal', controllers.withdrawal);
 app.delete('/memo', controllers.deleteMemo);
+app.delete('/memo/list', controllers.deleteMemos);
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 8080
 

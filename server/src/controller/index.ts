@@ -1,6 +1,7 @@
 import { addMemo } from './memo/addMemo'
 import { auth } from './users/auth'
 import { deleteMemo } from './memo/deleteMemo'
+import { deleteMemos } from './memo/list/deleteMemos'
 import { fileUploader } from './fileUploadFunctions'
 import { getMemo } from './memo/getMemo'
 import { getMemos } from './memo/list/getMemos'
@@ -15,6 +16,7 @@ const controllers = {
     addMemo,
     auth,
     deleteMemo,
+    deleteMemos,
     fileUploader,
     getUserInfo,
     googleCallback,
