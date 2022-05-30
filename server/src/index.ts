@@ -19,7 +19,8 @@ app.use(
 app.use(cookieParser())
 
 app.get('/auth', controllers.auth);
-app.get('/memo', controllers.viewMemo);
+app.get('/memo', controllers.getMemo);
+app.get('/memo/list', controllers.getMemos);
 app.get('/user', controllers.getUserInfo);
 
 app.post('/memo', controllers.addMemo);
@@ -31,6 +32,7 @@ app.patch('/memo', controllers.modifyMemo);
 
 app.delete('/withdrawal', controllers.withdrawal);
 app.delete('/memo', controllers.deleteMemo);
+app.delete('/memo/list', controllers.deleteMemos);
 
 const HTTPS_PORT = process.env.HTTPS_PORT || 8080
 
