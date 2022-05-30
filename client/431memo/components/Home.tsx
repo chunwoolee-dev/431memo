@@ -1,8 +1,18 @@
 import Header from "./Header";
+import MemoList from "./MemoList";
 
-const Home = () => {
+interface Props {
+    email : string,
+    id : number
+    setUserInfo : Function
+}
+
+const Home = ({email, id, setUserInfo}:Props) => {
     return (
-        <Header/>
+        <>
+            <Header email={email} id={id} setUserInfo={setUserInfo}/>
+            <MemoList />
+        </>
     )
 }
 

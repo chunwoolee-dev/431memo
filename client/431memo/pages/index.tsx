@@ -1,29 +1,40 @@
 import type { NextPage } from 'next'
 import LoginStatus from '@components/LoginStatus';
 import { useSession } from './api/session';
+import { useTheme } from 'styled-components';
+import UserInfo from '@components/UserInfo';
+import { useState } from 'react';
 
 interface Props {
   session : boolean
   name : {
     id : number
     email : string
+  },
+  err : {
+    isFailed : boolean
+    msg : string
   }
 }
 
-const Home: NextPage<Props> = ({session, name}) => {
-
+const Home: NextPage<Props> = ({session, name, err}) => {
+  const [isUserInfo, setUserInfo] = useState(false);
   return (
-    <LoginStatus session={session} name={name}/>
+    <>
+      {isUserInfo ? <UserInfo session={session} name={name} err={err} setUserInfo={setUserInfo}/> : null}
+      <LoginStatus session={session} name={name} err={err} setUserInfo={setUserInfo}/>
+    </>
   )
 }
 
 export async function getServerSideProps(context:any){
-  const {name, session} = await useSession(context.req.headers.cookie);
+  const {name, session, err} = await useSession(context.req.headers.cookie);
   
   return {
     props : {
       name : name,
       session : session,
+      err : err
     }
   }
 }
