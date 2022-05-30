@@ -4,7 +4,7 @@ import { Request, Response } from 'express'
 
 export async function modifyMemo (req: Request, res: Response) {
 
-    const { id, title, context } = req.body
+    const { id, title='', context='' } = req.body
     // 변수가 없는 경우 에러 처리
     if (!id)
         return res.status(400).send('id 변수가 없습니다.')

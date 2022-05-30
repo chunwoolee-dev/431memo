@@ -20,7 +20,7 @@ model Memo {
   id        Int      @id @default(autoincrement())
   authorId  Int
   title     String
-  context   String
+  context   String   @db.LongText
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   author    User?    @relation(fields: [authorId], references: [id])

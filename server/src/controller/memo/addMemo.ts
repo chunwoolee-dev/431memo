@@ -25,12 +25,12 @@ export async function addMemo (req: Request, res: Response) {
     const userInfo = await prisma.user.findFirst({ where: { email: email, } })
 
     // memo 추가
-    await prisma.memo.create({
+    const { id:createdId } = await prisma.memo.create({
         data: {
             authorId:userInfo!.id,
             title:title,
             context:context
         }
     })
-    return res.status(200).send();
+    return res.status(200).json(createdId);
 }
