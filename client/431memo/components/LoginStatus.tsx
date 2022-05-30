@@ -8,6 +8,7 @@ interface Props {
     name : {
         id : number
         email : string
+        picture : string
     }
     err : {
         isFailed : boolean
@@ -21,7 +22,7 @@ const LoginStatus = ({session, name, err, setUserInfo}:Props) => {
     switch (session) {
         case true :
             return (
-                <Home email={name.email} id={name.id} setUserInfo={setUserInfo}/>
+                <Home email={name.email} id={name.id} picture={name.picture} setUserInfo={setUserInfo}/>
             )
         default :
             return (

@@ -14,13 +14,14 @@ const HomeWrap = styled.div`
 interface Props {
     email : string,
     id : number
+    picture : string
     setUserInfo : Function
 }
 
-const Home = ({email, id, setUserInfo}:Props) => {
+const Home = ({email, id, setUserInfo, picture}:Props) => {
     return (
         <HomeWrap>
-            <Header email={email} id={id} setUserInfo={setUserInfo}/>
+            <Header email={email} id={id} picture={picture} setUserInfo={setUserInfo}/>
             <MemoList />
         </HomeWrap>
     )

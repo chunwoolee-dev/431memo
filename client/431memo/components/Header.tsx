@@ -23,13 +23,24 @@ const HeaderArea = styled.div`
     }
 `
 
+const UserInfoWrap = styled.div`
+    display:flex;
+    align-items:center;
+    gap:${props => props.theme.space.m};
+`
+const Thumbnail = styled.img`
+    width:24px; height:24px; border-radius:50%;
+    border:${props => props.theme.border};
+`;
+
 interface Props {
     email:string
     id:number
+    picture:string
     setUserInfo:Function
 }
 
-const Header = ({email, id, setUserInfo}:Props) => {
+const Header = ({email, id, setUserInfo, picture}:Props) => {
     const theme = useTheme();
     const router = useRouter();
     const reg = /\@gmail\.com$/;
@@ -47,7 +58,10 @@ const Header = ({email, id, setUserInfo}:Props) => {
                 <HeaderArea>
                     <div>
                         <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color} onClick={() => setUserInfo(true)}>
-                            {name}
+                            <UserInfoWrap>
+                                <Thumbnail src={picture} alt="프로필 사진"/>
+                                <p>{name}</p>
+                            </UserInfoWrap>
                         </RadiusButton>
                     </div>
                 </HeaderArea>
