@@ -1,9 +1,8 @@
-import { useSession } from "next-auth/react";
 import Login from "@components/Login";
 import Home from "./Home";
 
 const LoginStatus = () => {
-    const {data, status} = useSession();
+    const {data, status} = {data:'hi', status:'unauthenticated'};
     switch (status) {
         case 'loading' :
             return (
