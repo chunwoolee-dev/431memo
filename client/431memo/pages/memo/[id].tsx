@@ -20,7 +20,7 @@ interface Props {
 
 const Memo:NextPage<Props> = ({data}) => {
     const router = useRouter();
-    const [title, setTitle] = useState(data ? data.context : '');
+    const [title, setTitle] = useState(data ? data.title : '');
     const [context, setContext] = useState(data ? data.context : '');
 
     const id = data === null ? 0 : Number(router.query.id);
