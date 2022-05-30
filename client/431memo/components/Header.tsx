@@ -1,4 +1,5 @@
-import { signOut } from "next-auth/react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import styled, { useTheme } from "styled-components";
 import RadiusButton from "./RadiusButton";
 
@@ -24,6 +25,7 @@ const HeaderArea = styled.div`
 `
 
 const Header = () => {
+    const router = useRouter();
     const theme = useTheme();
     return (
         <HeaderBlock>
@@ -37,7 +39,14 @@ const Header = () => {
                 </HeaderArea>
                 <HeaderArea>
                     이름
-                    <button type="button" onClick={() => signOut()}>로그아웃</button>
+                    <button type="button"   onClick={() => {
+                        axios({
+                            url:'/logout',
+                            method:'post'
+                        })
+                        .then(data => router.push('/'))
+                        .catch(data => alert('실패'))
+                    }}>로그아웃</button>
                 </HeaderArea>
             </HeaderSection>
         </HeaderBlock>

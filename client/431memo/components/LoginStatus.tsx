@@ -1,20 +1,28 @@
 import Login from "@components/Login";
 import Home from "./Home";
 
-const LoginStatus = () => {
-    const {data, status} = {data:'hi', status:'unauthenticated'};
-    switch (status) {
-        case 'loading' :
+interface Props {
+    session : boolean
+    name : {
+        id : number
+        email : string
+    }
+}
+
+const LoginStatus = ({session, name}:Props) => {
+    
+    switch (session) {
+        case false :
             return (
-                <></>
+                <Login isFailed={false}/>
             )
-        case 'unauthenticated' :
-            return (
-                <Login/>
-            )
-        case 'authenticated' :
+        case true :
             return (
                 <Home/>
+            )
+        default :
+            return (
+                <Login isFailed={true}/>
             )
     }
 }

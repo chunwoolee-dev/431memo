@@ -11,15 +11,13 @@ const Home: NextPage<Props> = (props) => {
   const router = useRouter();
   useEffect(() => {
     const code = props.code;
-    const url = process.env.SERVER;
     if(code){
       axios({
-          url : `${url}/callback/google`,
+          url : `/callback/google`,
           method : 'post',
           data : {
               code : code
-          },
-          withCredentials : true
+          }
       })
       .then(() => router.push("/"))
       .catch(() => router.push("/"));
