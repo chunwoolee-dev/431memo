@@ -36,7 +36,7 @@ export const getSession = async (cookie:string) => {
 
     return {
         session : data,
-        name : name,
+        user : name,
         err : err
     }
 }

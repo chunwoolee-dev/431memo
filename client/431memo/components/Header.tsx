@@ -38,12 +38,10 @@ const Thumbnail = styled.img`
 `;
 
 const Header = () => {
-    const [{session, name, err}] = useSession();
+    const [{session, user, err}] = useSession();
     const router = useRouter();
 
     const theme = useTheme();
-    const reg = /\@gmail\.com$/;
-    const ename  = name ? reg.test(name.email) ? name.email.replace(reg,'') : name.email : '';
     return (
         <>
             {router.query['user-detail'] === 'true' ? <UserInfo/> : null}
@@ -73,11 +71,11 @@ const Header = () => {
                         <Link href="?user-detail=true" as={router.asPath}>
                             <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
                                 <UserInfoWrap>
-                                    { name ? 
-                                        <Thumbnail src={name.picture} alt="프로필 사진"/>
+                                    <p>{user && user.name}</p>
+                                    { user ? 
+                                        <Thumbnail src={user.picture} alt="프로필 사진"/>
                                         : null
                                     }
-                                    <p>{ename}</p>
                                 </UserInfoWrap>
                             </RadiusButton>
                         </Link>

@@ -63,16 +63,16 @@ const Thumbnail = styled.div`
 `
 
 const UserInfo = function(){
-    const [{session, name, err}, setValue] = useSession();
+    const [{session, user, err}, setValue] = useSession();
     const router = useRouter();
     
     return (
         <Modal onClose={() => router.replace(router.asPath)}>
             <Wrapper>
                 <Thumbnail>
-                    <img src={name && name.picture} alt="프로필 사진"></img>
+                    <img src={user && user.picture} alt="프로필 사진"></img>
                 </Thumbnail>
-                <p>{name && name.email}</p>
+                <p>{user && user.email}</p>
             </Wrapper>
 
             <MenuList>

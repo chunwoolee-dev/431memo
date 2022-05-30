@@ -11,6 +11,10 @@ interface Props {
     data : {
         context : string
         title : string
+        id : number
+        authorId : number
+        createdAt : string
+        updatedAt : string
     } | null
 }
 
