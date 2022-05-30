@@ -153,7 +153,7 @@ const Memo:NextPage<Props> = ({data}) => {
                         <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="제목"/>
                     </TitleWrap>
                     <TextArea>
-                        <textarea value={context} onChange={(e) => {
+                        <textarea value={context} autoFocus={true} onChange={(e) => {
                             e.target.style.height = 'auto';
                             e.target.style.height = `${e.target.scrollHeight}px`;
                             setContext(e.target.value);

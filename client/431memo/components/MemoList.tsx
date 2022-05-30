@@ -79,11 +79,11 @@ const MemoDetail = styled.div`
 const AddBtnWrap = styled.div`
     position:sticky;
     bottom:24px;
-    right:32px;
     display:flex;
     justify-content:flex-end;
 `
 const AddBtn = styled.div`
+    padding:0 ${props => props.theme.space.b};
     .wrapper {
         display:flex;
         align-items:center;
@@ -163,7 +163,7 @@ const MemoList = function() {
                 id : 0
             })
         }}>
-            <Wrapper>
+            {/* <Wrapper> */}
 
                 {
                     memoList === undefined
@@ -187,7 +187,6 @@ const MemoList = function() {
                         </Empty>
                     :
                     <>
-                    
                         <MemoWh>
                             <MemoListUl>
                                 {memos}
@@ -228,7 +227,7 @@ const MemoList = function() {
                         </Link>
                     </>
                 }            
-            </Wrapper>
+            {/* </Wrapper> */}
         </MemoListWrap>
 
     )

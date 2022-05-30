@@ -14,8 +14,8 @@ const HeaderBlock = styled.header`
 
 const HeaderSection = styled.div`
     width:100%; height:100%;
-    max-width:${props => props.theme.maxWidth};
-    margin:0 auto;
+    // max-width:${props => props.theme.maxWidth};
+    // margin:0 auto;
     padding:0 ${props => props.theme.space.m};
     display:flex; align-items:center;
 `
