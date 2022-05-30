@@ -78,7 +78,8 @@ const common = {
         'fade-out' : `animation:fade-out 0.34s both;`,
         'bottom-to-top' : `animation:bottom-to-top 0.64s both;`,
         'top-to-bottom' : `animation:top-to-bottom 0.34s both;`,
-    }
+    },
+    maxWidth : '880px'
 }
 
 const Theme = {

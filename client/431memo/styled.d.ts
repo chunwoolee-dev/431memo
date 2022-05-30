@@ -8,6 +8,8 @@ declare module "styled-components" {
     paper: string
     name: string
 
+    maxWidth: string
+
     media : {
       min: string
       mobile: string

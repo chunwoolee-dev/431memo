@@ -6,6 +6,7 @@ import styled, { useTheme } from "styled-components";
 import ContextMenu from "./ContextMenu";
 import Loading from "./Loading";
 import RadiusButton from "./RadiusButton";
+import Wrapper from "./Wrapper";
 
 const MemoListWrap = styled.div`
     position:relative;
@@ -30,7 +31,10 @@ const Empty = styled.div`
     align-items:center;
     gap:${props => props.theme.space.b};
 `
-
+const MemoWh = styled.div`
+    height:100%;
+    flex:1;
+`
 const MemoListUl = styled.ul`
     display:grid;
     gap:${props => props.theme.space.b};
@@ -72,17 +76,20 @@ const MemoDetail = styled.div`
         backdrop-filter:blur(4px);
     }
 `
-
-const AddBtn = styled.div`
-    position:fixed;
+const AddBtnWrap = styled.div`
+    position:sticky;
     bottom:24px;
     right:32px;
+    display:flex;
+    justify-content:flex-end;
+`
+const AddBtn = styled.div`
     .wrapper {
         display:flex;
         align-items:center;
         justify-content:center;
-        width:24px;
-        height:calc(24px + ${props => props.theme.space.b});
+        width:16px;
+        height:calc(16px + ${props => props.theme.space.b});
     }
 `
 
@@ -156,64 +163,72 @@ const MemoList = function() {
                 id : 0
             })
         }}>
-            {
-                memoList === undefined
-                ?
-                    <LoadingWrap>
-                        <Loading/>
-                    </LoadingWrap>
-                :
-                    memoList.length === 0
-                ?
-                    <Empty>
-                        <p>메모가 없습니다</p>
-                        <div>
-                            <Link href="/memo/add">
-                                <RadiusButton>
-                                    <p className="title">메모 추가</p>
-                                    <p className="material-symbols-outlined icon-16">add</p>
-                                </RadiusButton>
-                            </Link>
-                        </div>
-                    </Empty>
-                :
-                <>
-                    <MemoListUl>
-                        {memos}
-                    </MemoListUl>
-                    {
-                        context.isShow
-                        ?
-                        <ContextMenu x={context.x} y={context.y} id={context.id} onClick={() => {
-                            memo({
-                                title:'',
-                                context:'',
-                                id:context.id,
-                                mtd:'delete'
-                            }).then(data => getMemo());
-                            setContext({
-                                isShow : false,
-                                x : 0,
-                                y : 0,
-                                id : 0
-                            })
-                        }}/>
-                        :
-                        null
-                    }
-                    <Link href="/memo/add">
-                        <AddBtn>
-                            <RadiusButton backgroundColor={theme.name === 'dark' ? theme.colors.secondary[4] : theme.colors.primary[4]}
-                                          color={theme.backgroundColor}>
-                                <div className="wrapper">
-                                    {/* <p className="title">메모 추가</p> */}
-                                    <p className="material-symbols-outlined icon-48">add</p>
-                                </div>
-                            </RadiusButton>
-                        </AddBtn>
-                    </Link>
-                </>
-            }            
+            <Wrapper>
+
+                {
+                    memoList === undefined
+                    ?
+                        <LoadingWrap>
+                            <Loading/>
+                        </LoadingWrap>
+                    :
+                        memoList.length === 0
+                    ?
+                        <Empty>
+                            <p>메모가 없습니다</p>
+                            <div>
+                                <Link href="/memo/add">
+                                    <RadiusButton>
+                                        <p className="title">메모 추가</p>
+                                        <p className="material-symbols-outlined icon-16">add</p>
+                                    </RadiusButton>
+                                </Link>
+                            </div>
+                        </Empty>
+                    :
+                    <>
+                    
+                        <MemoWh>
+                            <MemoListUl>
+                                {memos}
+                            </MemoListUl>
+                            {
+                                context.isShow
+                                ?
+                                <ContextMenu x={context.x} y={context.y} id={context.id} onClick={() => {
+                                    memo({
+                                        title:'',
+                                        context:'',
+                                        id:context.id,
+                                        mtd:'delete'
+                                    }).then(data => getMemo());
+                                    setContext({
+                                        isShow : false,
+                                        x : 0,
+                                        y : 0,
+                                        id : 0
+                                    })
+                                }}/>
+                                :
+                                null
+                            }
+                        </MemoWh>
+                        <Link href="/memo/add">
+                            <AddBtnWrap>
+                                <AddBtn>
+                                    <RadiusButton backgroundColor={theme.name === 'dark' ? theme.colors.secondary[4] : theme.colors.primary[4]}
+                                                color={theme.backgroundColor}>
+                                        <div className="wrapper">
+                                            {/* <p className="title">메모 추가</p> */}
+                                            <p className="material-symbols-outlined icon-48">add</p>
+                                        </div>
+                                    </RadiusButton>
+                                </AddBtn>
+                            </AddBtnWrap>
+                        </Link>
+                    </>
+                }            
+            </Wrapper>
         </MemoListWrap>
 
     )

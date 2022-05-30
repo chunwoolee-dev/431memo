@@ -1,4 +1,5 @@
 import Header from "@components/Header";
+import Wrapper from "@components/Wrapper";
 import { memo } from "@pages/api/memo";
 import axios from "axios";
 import { NextPage, NextPageContext } from "next";
@@ -19,16 +20,6 @@ const InputWrap = styled.div`
     flex:1;
     overflow-y:auto;
     position:relative;
-`
-
-const Wrapper = styled.div`
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    max-width:880px;
-    min-height:100%;
-    margin:0 auto;
-    padding:${props => props.theme.space.b} ${props => props.theme.space.m};
 `
 
 const TitleWrap = styled.label`
@@ -72,7 +63,7 @@ const ButtonPosition = styled.div`
     position:sticky;
     width:100%;
     left:0;
-    bottom:${props => props.theme.space.b};
+    bottom:24px;
 `
 const ButtonWrap = styled.div`
     height:48px;
