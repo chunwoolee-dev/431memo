@@ -6,6 +6,7 @@ interface Props {
 
 const Button = styled.button<Props>`
     border:0; border-radius:9999px; width:100%; display:flex; justify-content:center; align-items:center; cursor:pointer;
+    gap:${props => props.theme.space.s};
     position:relative; overflow:hidden;
     font-size:14px; user-select:none;
     background:${props => props.backgroundColor ? props.backgroundColor : props.theme.colors.tertiary[1]};
@@ -21,6 +22,11 @@ const Button = styled.button<Props>`
     }
     &:active > div.hover {
         filter:contrast(1) brightness(75%) opacity(0.7);
+    }
+
+    > .title {
+        line-height:1;
+        font-weight:bold;
     }
 `
 
