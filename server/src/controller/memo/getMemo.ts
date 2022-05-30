@@ -37,8 +37,8 @@ export async function getMemo (req: Request, res: Response) {
         }
     })
 
-    if (userInfo?.memos.length === 0)
-        return res.status(403).send('메모가 없거나 요청한 유저의 메모가 아닙니다.')
+    if (userInfo!.memos.length === 0)
+        return res.status(200).json([]);
 
     // 유저의 첫번째 메모만 가져온다.
     const [ memo ] = userInfo?.memos || []

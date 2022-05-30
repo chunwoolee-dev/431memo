@@ -12,7 +12,7 @@ export async function withdrawal(req: Request, res: Response) {
     if (!isAuthorized(req.cookies.jwt))
         return res.status(401).send('쿠키가 만료 되었거나 올바르지 않습니다.')
 
-    const { email, authCode } = getAccessTokenData(req.cookies.jwt)
+    const { email } = getAccessTokenData(req.cookies.jwt)
 
     // 이메일값과 authCode user 테이블에서 유저정보를 가져온다
     const userInfo = await prisma.user.findFirst({

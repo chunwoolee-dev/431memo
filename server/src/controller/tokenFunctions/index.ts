@@ -2,9 +2,8 @@ require('dotenv').config()
 import { sign, verify, VerifyCallback } from 'jsonwebtoken'
 
 export type AccessTokenData = {
-    id: number,
     email: string,
-    authCode: string,
+    picture: string,
 }
 
 export async function generateAccessToken (data: object):Promise<string> {
@@ -17,7 +16,7 @@ export function getAccessTokenData (jwt: string): AccessTokenData {
         decodeData = decoded
     }
     verify(jwt, process.env.ACCESS_SECRET as string, callback)
-    return decodeData || { id: 0, email: '', authCode: '', }
+    return decodeData || { email:'', picture:'' }
 }
 
 export function isAuthorized (jwt: string): boolean {

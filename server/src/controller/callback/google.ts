@@ -27,8 +27,8 @@ export async function googleCallback (req: Request, res: Response) {
     const { access_token } = ( await axios.post( url, headers ) ).data
 
     // 받아온 토큰으로 이메일을 가져온다.
-    const { email } = (await axios.post(
-        "https://www.googleapis.com/oauth2/v1/tokeninfo" +
+    const { email,picture } = (await axios.get(
+        "https://www.googleapis.com/oauth2/v2/userinfo" +
             `?access_token=${access_token}`,
         headers
     )).data
@@ -46,7 +46,7 @@ export async function googleCallback (req: Request, res: Response) {
     })
     if (userInfo) {
         // jwt 토큰을 쿠키에 저장
-        const accessToken = await generateAccessToken({email:email})
+        const accessToken = await generateAccessToken({email:email, picture:picture})
         return res.cookie("jwt", accessToken, cookieOptions).status(200).send()
     }
 
@@ -58,7 +58,7 @@ export async function googleCallback (req: Request, res: Response) {
     })
 
     // jwt 토큰을 쿠키에 저장
-    const accessToken = await generateAccessToken({email:email})
+    const accessToken = await generateAccessToken({email:email, picture:picture})
     return res.cookie("jwt", accessToken, cookieOptions).status(200).send()
 
 }
