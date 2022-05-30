@@ -12,14 +12,7 @@ export async function getUserInfo (req: Request, res: Response) {
     if(!isAuthorized(req.cookies.jwt))
         return res.status(403).send()
 
-    const { email, picture } = getAccessTokenData(req.cookies.jwt)
+    const cookieData = getAccessTokenData(req.cookies.jwt)
 
-    const userInfo = await prisma.user.findFirst({
-        where: {
-            email: email
-        }
-    })
-    
-    // 로그인 되어있다고 전달
-    return res.status(200).json({ ...userInfo, picture })
+    return res.status(200).json(cookieData)
 }
