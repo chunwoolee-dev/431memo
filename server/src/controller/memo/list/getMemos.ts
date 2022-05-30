@@ -47,7 +47,7 @@ export async function getMemos (req: Request, res: Response) {
         id: memo.id,
         title: memo?.title,
         context: memo?.context
-    }))
+    })) || []
 
     return res.status(200).json(memos);
 }
