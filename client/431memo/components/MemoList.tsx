@@ -95,13 +95,13 @@ interface Memo {
 const MemoList = function() {
     const theme = useTheme();
     const [memoList, setList]:[Array<Object>|undefined, Function] = useState();
+    const [memos, setMemo]:[Array<any>, Function] = useState([]);
     const [context, setContext] = useState({
         isShow : false,
         x : 0,
         y : 0,
         id : 0
     });
-    const [memos, setMemo] = useState([]);
     const getMemo = () => {
         axios({
             url:'/memo/list',
@@ -190,7 +190,7 @@ const MemoList = function() {
                                 context:'',
                                 id:context.id,
                                 mtd:'delete'
-                            })
+                            }).then(data => getMemo());
                             setContext({
                                 isShow : false,
                                 x : 0,

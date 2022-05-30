@@ -103,10 +103,12 @@ const Button = styled.div`
     &:active:before {
         filter:contrast(1) brightness(75%) opacity(0.7);
     }
+    .red {
+        color:${props => props.theme.colors.danger[4]};
+    }
     & + & {
         width:48px;
         border-left:${props => props.theme.border};
-        color:${props => props.theme.colors.danger[4]};
     }
 `
 
@@ -168,15 +170,6 @@ const Memo:NextPage<Props> = ({data}) => {
                     </TextArea>
                     <ButtonPosition>
                         <ButtonWrap>
-                            <Button onClick={() => {
-                                saveMemo({
-                                    title:title,
-                                    context:context,
-                                    id:id
-                                }, router).then(data => router.back());
-                            }}>
-                                <p className="material-symbols-outlined">done</p>
-                            </Button>
                             {
                                 id !== 0
                                 ?
@@ -188,11 +181,20 @@ const Memo:NextPage<Props> = ({data}) => {
                                         mtd:'delete'
                                     }).then(data => router.back());
                                 }}>
-                                    <p className="material-symbols-outlined">delete</p>
+                                    <p className="material-symbols-outlined red">delete</p>
                                 </Button>
                                 :
                                 null
                             }
+                            <Button onClick={() => {
+                                saveMemo({
+                                    title:title,
+                                    context:context,
+                                    id:id
+                                }, router).then(data => router.back());
+                            }}>
+                                <p className="material-symbols-outlined">done</p>
+                            </Button>
                         </ButtonWrap>
                     </ButtonPosition>
                 </Wrapper>

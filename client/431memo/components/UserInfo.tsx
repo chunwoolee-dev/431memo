@@ -35,6 +35,7 @@ const MenuItem = styled.li`
         align-items:center;
 
         > .title {
+            line-height:1;
             flex:1;
             display:flex;
             align-items:center;

@@ -10,6 +10,15 @@ const ContextWrap = styled.div<ContextWrap>`
     left:${props => props.x}px;
     border:${props => props.theme.border};
     border-radius:${props => props.theme.space.s};
+    padding:${props => props.theme.space.m};
+    background:${props => props.theme.paper};
+    display:flex;
+    gap:${props => props.theme.space.m};
+    cursor:pointer;
+    &:hover {
+        background:${props => props.theme.colors.danger[4]};
+        color:#fff;
+    }
 `
 
 interface Props {
@@ -22,7 +31,8 @@ interface Props {
 const ContextMenu = ({x, y, id, onClick}:Props) => {
     return (
         <ContextWrap x={x} y={y} onClick={onClick}>
-            삭제
+            <p>삭제</p>
+            <p className="material-symbols-outlined">delete</p>
         </ContextWrap>
     )
 }
