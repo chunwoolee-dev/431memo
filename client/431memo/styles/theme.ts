@@ -59,6 +59,7 @@ const colors = {
 }
 const common = {
     media : {
+        'min' : '280px',
         'mobile' : '540px',
         'stab' : '900px',
         'btab' : '1240px',
@@ -82,11 +83,13 @@ const common = {
 
 const Theme = {
     light : {
+        name : 'light',
         color : colors.tertiary[8],
         backgroundColor : colors.tertiary[0],
         paper : colors.tertiary[1]
     },
     dark : {
+        name : 'dark',
         color : colors.tertiary[0],
         backgroundColor : colors.tertiary[8],
         paper : colors.tertiary[7],

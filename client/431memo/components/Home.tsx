@@ -11,17 +11,10 @@ const HomeWrap = styled.div`
     flex-direction:column;
 `
 
-interface Props {
-    email : string,
-    id : number
-    picture : string
-    setUserInfo : Function
-}
-
-const Home = ({email, id, setUserInfo, picture}:Props) => {
+const Home = () => {
     return (
         <HomeWrap>
-            <Header email={email} id={id} picture={picture} setUserInfo={setUserInfo}/>
+            <Header />
             <MemoList />
         </HomeWrap>
     )

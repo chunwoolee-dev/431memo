@@ -1,35 +1,28 @@
 import Login from "@components/Login";
+import { useContext, useEffect } from "react";
 import { useTheme } from "styled-components";
 import Home from "./Home";
-import Toast from "./toast";
+import { SessionContext } from "./Session";
+import Toast from "./Toast";
 
-interface Props {
-    session : boolean
-    name : {
-        id : number
-        email : string
-        picture : string
-    }
-    err : {
-        isFailed : boolean
-        msg : string
-    }
-    setUserInfo : Function
-}
-
-const LoginStatus = ({session, name, err, setUserInfo}:Props) => {
+const LoginStatus = () => {
+    const [{session, err}] = useContext(SessionContext);
     const theme = useTheme();
     switch (session) {
         case true :
             return (
-                <Home email={name.email} id={name.id} picture={name.picture} setUserInfo={setUserInfo}/>
+                <Home/>
             )
-        default :
+        case false :
             return (
                 <>
                     {err.isFailed ? <Toast msg={err.msg} background={theme.colors.danger[4]} color={theme.colors.tertiary[0]}/> : null}
                     <Login/>
                 </>
+            )
+        default :
+            return (
+                <></>
             )
     }
 }

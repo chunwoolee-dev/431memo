@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -21,7 +21,6 @@ const ToastBox = styled.div<ToastBoxProps>`
     color:${props => props.color ? props.color : props.theme.color};
     padding:${props => props.theme.space.m};
     border-radius:${props => props.theme.space.s};
-    
 `
 
 const Toast = function({msg, background, color, position}:Props){

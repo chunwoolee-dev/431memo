@@ -6,8 +6,10 @@ declare module "styled-components" {
     color: string
     backgroundColor: string
     paper: string
+    name: string
 
     media : {
+      min: string
       mobile: string
       stab: string
       btab: string

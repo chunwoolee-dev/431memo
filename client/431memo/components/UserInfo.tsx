@@ -1,4 +1,4 @@
-import { logout } from "@pages/api/session"
+import { logout, useSession } from "@pages/api/session"
 import { useRouter } from "next/router"
 import styled from "styled-components"
 import Modal from "./Modal"
@@ -62,35 +62,22 @@ const Thumbnail = styled.div`
     }
 `
 
-interface Props {
-    session : boolean
-    name : {
-        id : number
-        email : string
-        picture : string
-    }
-    err : {
-        isFailed : boolean
-        msg : string
-    }
-    setUserInfo : Function
-}
-
-const UserInfo = function({session, name, err, setUserInfo}:Props){
+const UserInfo = function(){
+    const [{session, name, err}, setValue] = useSession();
     const router = useRouter();
+    
     return (
-        <Modal onClose={() => setUserInfo(false)}>
+        <Modal onClose={() => router.replace(router.asPath)}>
             <Wrapper>
                 <Thumbnail>
-                    <img src={name.picture} alt="프로필 사진"></img>
+                    <img src={name && name.picture} alt="프로필 사진"></img>
                 </Thumbnail>
                 <p>{name && name.email}</p>
             </Wrapper>
 
             <MenuList>
                 <MenuItem onClick={async () => {
-                    await logout(router);
-                    setUserInfo(false);
+                    await logout(router, setValue);
                 }}>
                     <Wrapper>
                         <div className="menu-item-wrap">

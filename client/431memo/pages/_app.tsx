@@ -4,16 +4,20 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider } from "styled-components"
 import { theme } from '@styles/theme'
 import axios from 'axios';
+import SessionProvider from '@components/Session';
 
 axios.defaults.baseURL = process.env.SERVER
 axios.defaults.withCredentials = true
+axios.defaults.headers.Cookie = '';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={theme.dark}>
-      <GlobalStyle/>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <SessionProvider>
+      <ThemeProvider theme={theme.light}>
+        <GlobalStyle/>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </SessionProvider>
   )
 }
 

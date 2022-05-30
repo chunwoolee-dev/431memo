@@ -1,6 +1,8 @@
+import { memo } from "@pages/api/memo";
 import axios from "axios";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 import Loading from "./Loading";
 import RadiusButton from "./RadiusButton";
 
@@ -27,17 +29,95 @@ const Empty = styled.div`
     gap:${props => props.theme.space.b};
 `
 
+const MemoListUl = styled.ul`
+    display:grid;
+    gap:${props => props.theme.space.b};
+    padding:${props => props.theme.space.b};
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+`
+const MemoItem = styled.li`
+    cursor:pointer;
+    border-radius:${props => props.theme.space.b};
+    border:${props => props.theme.border};
+    background:${props => props.theme.backgroundColor};
+    width:100%;
+    position:relative;
+    overflow:hidden;
+    user-select:none;
+
+    &:before {
+        content:''; display:block; padding-bottom:100%;
+    }
+`
+
+const MemoDetail = styled.div`
+    position:absolute;
+    top:0; left:0; right:0; bottom:0;
+
+    > .context {
+        font-size:12px;
+        opacity:0.5;
+    }
+    > .title {
+        position:absolute;
+        bottom:0;
+        width:100%;
+        padding:${props => props.theme.space.b};
+        background:${props => props.theme.paper}99;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        overflow:hidden;
+        backdrop-filter:blur(4px);
+    }
+`
+
+const AddBtn = styled.div`
+    position:fixed;
+    bottom:24px;
+    right:32px;
+    .wrapper {
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        width:24px;
+        height:calc(24px + ${props => props.theme.space.b});
+    }
+`
+
+interface Memo {
+    context : string
+    title : string
+    id : number
+}
+
 const MemoList = function() {
+    const theme = useTheme();
     const [memoList, setList]:[Array<Object>|undefined, Function] = useState();
-    useEffect(() => {
+    const [memos, setMemo] = useState([]);
+    const getMemo = () => {
         axios({
             url:'/memo/list',
             data:{
                 count:100,
                 page:1
             }
-        }).then(data => setList(data.data));
-    }, []);
+        }).then(({data}) => {
+            setList(data);
+            setMemo(data.map((item:Memo) => {
+                return (
+                    <MemoItem key={item.id}>
+                        <Link href={`/memo/${item.id}`}>
+                            <MemoDetail>
+                                <pre className="context">{item.context}</pre>
+                                <div className="title">{item.title}</div>
+                            </MemoDetail>
+                        </Link>
+                    </MemoItem>
+                )
+            }));
+        });
+    }
+    useEffect(getMemo, []);
 
     return (
         <MemoListWrap>
@@ -53,14 +133,31 @@ const MemoList = function() {
                     <Empty>
                         <p>메모가 없습니다</p>
                         <div>
-                            <RadiusButton>
-                                <p className="title">메모 추가</p>
-                                <p className="material-symbols-outlined icon-16">add</p>
-                            </RadiusButton>
+                            <Link href="/memo/add">
+                                <RadiusButton>
+                                    <p className="title">메모 추가</p>
+                                    <p className="material-symbols-outlined icon-16">add</p>
+                                </RadiusButton>
+                            </Link>
                         </div>
                     </Empty>
                 :
-                    <div>리스트</div>
+                <>
+                    <MemoListUl>
+                        {memos}
+                    </MemoListUl>
+                    <Link href="/memo/add">
+                        <AddBtn>
+                            <RadiusButton backgroundColor={theme.name === 'dark' ? theme.colors.secondary[4] : theme.colors.primary[4]}
+                                          color={theme.backgroundColor}>
+                                <div className="wrapper">
+                                    {/* <p className="title">메모 추가</p> */}
+                                    <p className="material-symbols-outlined icon-48">add</p>
+                                </div>
+                            </RadiusButton>
+                        </AddBtn>
+                    </Link>
+                </>
             }            
         </MemoListWrap>
 

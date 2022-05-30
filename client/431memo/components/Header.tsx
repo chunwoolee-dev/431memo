@@ -1,6 +1,10 @@
+import { useSession } from "@pages/api/session";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import styled, { useTheme } from "styled-components";
+import Title from './Title';
 import RadiusButton from "./RadiusButton";
+import UserInfo from "./UserInfo";
 
 const HeaderBlock = styled.header`
     width:100%; height:64px;
@@ -33,40 +37,55 @@ const Thumbnail = styled.img`
     border:${props => props.theme.border};
 `;
 
-interface Props {
-    email:string
-    id:number
-    picture:string
-    setUserInfo:Function
-}
-
-const Header = ({email, id, setUserInfo, picture}:Props) => {
-    const theme = useTheme();
+const Header = () => {
+    const [{session, name, err}] = useSession();
     const router = useRouter();
+
+    const theme = useTheme();
     const reg = /\@gmail\.com$/;
-    const name  = reg.test(email) ? email.replace(reg,'') : email;
+    const ename  = name ? reg.test(name.email) ? name.email.replace(reg,'') : name.email : '';
     return (
-        <HeaderBlock>
+        <>
+            {router.query['user-detail'] === 'true' ? <UserInfo/> : null}
+            <HeaderBlock>
             <HeaderSection>
                 <HeaderArea>
-                    <div>
+                    {router.pathname === '/memo/[id]' ?
+                    <>
+                        <Link href="/">
+                            <div>
+                                <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
+                                    <p className="material-symbols-outlined">keyboard_arrow_left</p>
+                                </RadiusButton>
+                            </div>
+                        </Link>
+                    </>
+                    : null}
+                    <Title />
+                    {/* <div>
                         <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
                             <p className="material-symbols-outlined icon-16">menu</p>
                         </RadiusButton>
-                    </div>
+                    </div> */}
                 </HeaderArea>
                 <HeaderArea>
                     <div>
-                        <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color} onClick={() => setUserInfo(true)}>
-                            <UserInfoWrap>
-                                <Thumbnail src={picture} alt="프로필 사진"/>
-                                <p>{name}</p>
-                            </UserInfoWrap>
-                        </RadiusButton>
+                        <Link href="?user-detail=true" as={router.asPath}>
+                            <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
+                                <UserInfoWrap>
+                                    { name ? 
+                                        <Thumbnail src={name.picture} alt="프로필 사진"/>
+                                        : null
+                                    }
+                                    <p>{ename}</p>
+                                </UserInfoWrap>
+                            </RadiusButton>
+                        </Link>
                     </div>
                 </HeaderArea>
             </HeaderSection>
         </HeaderBlock>
+        </>
     )
 }
 

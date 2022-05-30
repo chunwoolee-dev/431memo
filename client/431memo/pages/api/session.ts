@@ -1,7 +1,9 @@
+import { SessionContext } from "@components/Session";
 import axios from "axios"
 import { NextRouter } from "next/router";
+import { useContext } from "react";
 
-export const useSession = async (cookie:string) => {
+export const getSession = async (cookie:string) => {
     const cok = cookie ? cookie : '';
     const session = await axios({
         url : `/auth`,
@@ -39,13 +41,23 @@ export const useSession = async (cookie:string) => {
     }
 }
 
-export const logout = async (router:NextRouter) => {
+export const logout = async (router:NextRouter, setSession:Function) => {
     axios({
         url:'/logout',
         method:'post'
     })
-    .then(data => router.push('/'))
+    .then(data => {
+        router.push('/')
+        getSession(document.cookie).then((data) => {
+            setSession({...data});
+        })
+    })
     .catch(data => alert('실패'))
+}
+
+export const useSession = () => {
+    const data = useContext(SessionContext);
+    return data;
 }
 
 function isBoolean(data:any){

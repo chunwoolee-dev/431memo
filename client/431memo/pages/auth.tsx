@@ -4,6 +4,7 @@ import type { NextPage, NextPageContext } from 'next'
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { getSession, useSession } from './api/session';
 
 const ProgressBar = styled.div`
     position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const Home: NextPage<Props> = (props) => {
+  const [$data, setSession] = useSession();
   const router = useRouter();
   useEffect(() => {
     const code = props.code;
@@ -28,7 +30,12 @@ const Home: NextPage<Props> = (props) => {
               code : code
           }
       })
-      .then(() => router.push("/"))
+      .then(() => {
+        router.push("/");
+        getSession(document.cookie).then((data) => {
+          setSession({...data});
+        })
+      })
       .catch(() => router.push("/"));
     }
   }, []);

@@ -1,10 +1,10 @@
 import styled from "styled-components";
-interface Props {
+interface ButtonProps {
     backgroundColor: string|undefined;
     color: string|undefined;
 }
 
-const Button = styled.button<Props>`
+const Button = styled.button<ButtonProps>`
     border:0; border-radius:9999px; width:100%; display:flex; justify-content:center; align-items:center; cursor:pointer;
     gap:${props => props.theme.space.s};
     position:relative; overflow:hidden;
@@ -30,7 +30,14 @@ const Button = styled.button<Props>`
     }
 `
 
-const RadiusButton = (props:any) => {
+interface Props {
+    onClick ?: any
+    backgroundColor ?: string
+    color ?: string
+    children ?: any
+}
+
+const RadiusButton = (props:Props) => {
     return (
         <Button type="button" onClick={props.onClick} backgroundColor={props.backgroundColor} color={props.color}>
             <div className="hover"></div>
