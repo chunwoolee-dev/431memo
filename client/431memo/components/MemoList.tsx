@@ -97,7 +97,7 @@ const MemoList = function() {
     const getMemo = () => {
         axios({
             url:'/memo/list',
-            data:{
+            params:{
                 count:100,
                 page:1
             }
