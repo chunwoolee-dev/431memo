@@ -44,6 +44,7 @@ export async function getMemos (req: Request, res: Response) {
 
     // 필요한 속성만 뽑는다.
     const memos = userInfo?.memos.map(memo=>({
+        id: memo.id,
         title: memo?.title,
         context: memo?.context
     }))
