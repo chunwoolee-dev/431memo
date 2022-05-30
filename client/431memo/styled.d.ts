@@ -17,6 +17,8 @@ declare module "styled-components" {
       primary: Array<string>
       secondary: Array<string>
       tertiary: Array<string>
+      danger: Array<string>
+      safe: Array<string>
     }
     space : {
       s: string
