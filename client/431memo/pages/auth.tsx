@@ -20,6 +20,9 @@ interface Props {
 const Home: NextPage<Props> = (props) => {
   const [$data, setSession] = useSession();
   const router = useRouter();
+  if($data.session){
+    router.replace("/");
+  }
   useEffect(() => {
     const code = props.code;
     if(code){
@@ -31,12 +34,12 @@ const Home: NextPage<Props> = (props) => {
           }
       })
       .then(() => {
-        router.push("/");
+        router.replace("/");
         getSession(document.cookie).then((data) => {
           setSession({...data});
         })
       })
-      .catch(() => router.push("/"));
+      .catch(() => router.replace("/"));
     }
   }, []);
 
