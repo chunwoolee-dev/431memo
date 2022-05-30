@@ -8,7 +8,7 @@ import SessionProvider from '@components/Session';
 
 axios.defaults.baseURL = process.env.SERVER
 axios.defaults.withCredentials = true
-axios.defaults.headers.Cookie = '';
+// axios.defaults.headers.Cookie = '';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
