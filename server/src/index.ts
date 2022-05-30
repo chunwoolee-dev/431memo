@@ -19,7 +19,8 @@ app.use(
 app.use(cookieParser())
 
 app.get('/auth', controllers.auth);
-app.get('/memo', controllers.viewMemo);
+app.get('/memo', controllers.getMemo);
+app.get('/memo/list', controllers.getMemos);
 app.get('/user', controllers.getUserInfo);
 
 app.post('/memo', controllers.addMemo);

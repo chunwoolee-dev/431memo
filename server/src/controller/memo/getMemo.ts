@@ -2,7 +2,7 @@ import { prisma } from '../db'
 import { isAuthorized, getAccessTokenData } from '../tokenFunctions'
 import { Request, Response } from 'express'
 
-export async function viewMemo (req: Request, res: Response) {
+export async function getMemo (req: Request, res: Response) {
 
     const { id } = req.query
     // 변수가 없는 경우 에러 처리
