@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import styled, { useTheme } from "styled-components";
+import ContextMenu from "./ContextMenu";
 import Loading from "./Loading";
 import RadiusButton from "./RadiusButton";
 
@@ -94,6 +95,12 @@ interface Memo {
 const MemoList = function() {
     const theme = useTheme();
     const [memoList, setList]:[Array<Object>|undefined, Function] = useState();
+    const [context, setContext] = useState({
+        isShow : false,
+        x : 0,
+        y : 0,
+        id : 0
+    });
     const [memos, setMemo] = useState([]);
     const getMemo = () => {
         axios({
@@ -103,10 +110,11 @@ const MemoList = function() {
                 page:1
             }
         }).then(({data}) => {
-            setList(data);
-            setMemo(data.map((item:Memo) => {
+            const list = data ? data : []
+            setList(list);
+            setMemo(list.map((item:Memo) => {
                 return (
-                    <MemoItem key={item.id}>
+                    <MemoItem className="menu-item" key={item.id} data-id={item.id}>
                         <Link href={`/memo/${item.id}`}>
                             <MemoDetail>
                                 <pre className="context">{item.context}</pre>
@@ -121,7 +129,33 @@ const MemoList = function() {
     useEffect(getMemo, []);
 
     return (
-        <MemoListWrap>
+        <MemoListWrap onContextMenu={(e) => {
+            e.preventDefault();
+            const item = (e.target as HTMLElement).classList.contains('menu-item') ? e.target as HTMLElement : (e.target as HTMLElement).closest('.menu-item');
+            if(item){
+                setContext({
+                    isShow : true,
+                    x : e.clientX,
+                    y : e.clientY,
+                    id : Number(item.getAttribute('data-id'))
+                });
+            }else{
+                setContext({
+                    isShow : false,
+                    x : 0,
+                    y : 0,
+                    id : 0
+                })
+            }
+            return false;
+        }} onClick={(e) => {
+            setContext({
+                isShow : false,
+                x : 0,
+                y : 0,
+                id : 0
+            })
+        }}>
             {
                 memoList === undefined
                 ?
@@ -147,6 +181,26 @@ const MemoList = function() {
                     <MemoListUl>
                         {memos}
                     </MemoListUl>
+                    {
+                        context.isShow
+                        ?
+                        <ContextMenu x={context.x} y={context.y} id={context.id} onClick={() => {
+                            memo({
+                                title:'',
+                                context:'',
+                                id:context.id,
+                                mtd:'delete'
+                            })
+                            setContext({
+                                isShow : false,
+                                x : 0,
+                                y : 0,
+                                id : 0
+                            })
+                        }}/>
+                        :
+                        null
+                    }
                     <Link href="/memo/add">
                         <AddBtn>
                             <RadiusButton backgroundColor={theme.name === 'dark' ? theme.colors.secondary[4] : theme.colors.primary[4]}

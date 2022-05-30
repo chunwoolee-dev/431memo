@@ -173,9 +173,9 @@ const Memo:NextPage<Props> = ({data}) => {
                                     title:title,
                                     context:context,
                                     id:id
-                                }, router);
+                                }, router).then(data => router.back());
                             }}>
-                                <p className="material-symbols-outlined">save</p>
+                                <p className="material-symbols-outlined">done</p>
                             </Button>
                             {
                                 id !== 0
@@ -210,7 +210,7 @@ function saveMemo({
     context:string
     id:number
 }, router:NextRouter){
-    memo({
+    return memo({
         title:title,
         context:context,
         id:id

@@ -23,10 +23,16 @@ export const memo = function({
         id : id
     }
 
-    return axios({
-        url:'/memo',
-        method:method,
-        data:data,
-        params:data
-    });
+    const opt:any = {
+        url : '/memo',
+        method : method
+    }
+
+    if(mtd === 'delete'){
+        opt.params = data;
+    }else{
+        opt.data = data;
+    }
+
+    return axios(opt);
 }
