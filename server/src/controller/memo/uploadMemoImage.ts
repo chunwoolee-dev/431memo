@@ -1,3 +1,4 @@
+import { now } from '../../lib/date'
 import { prisma } from '../db'
 import { isAuthorized } from '../tokenFunctions'
 import { Request, Response, Express } from 'express'
@@ -23,7 +24,9 @@ export async function uploadMemoImage(req: Request, res: Response) {
         await prisma.file.create({
             data: {
                 memoId: Number(req.query.memoId),
-                url: `http://431memo.s3-website.ap-northeast-2.amazonaws.com/${file.key}`
+                url: `http://431memo.s3-website.ap-northeast-2.amazonaws.com/${file.key}`,
+                createdAt: now(),
+                updatedAt: now(),
             }
         })
         return res.status(200).send()

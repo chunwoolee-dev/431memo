@@ -1,3 +1,4 @@
+import { now } from '../../lib/date'
 import { prisma } from '../db'
 import { isAuthorized, getAccessTokenData } from '../tokenFunctions'
 import { Request, Response } from 'express'
@@ -29,7 +30,9 @@ export async function addMemo (req: Request, res: Response) {
         data: {
             authorId:userInfo!.id,
             title:title,
-            context:context
+            context:context,
+            createdAt: now(),
+            updatedAt: now(),
         }
     })
     return res.status(200).json(createdId);

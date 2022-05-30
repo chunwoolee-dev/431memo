@@ -21,8 +21,8 @@ model Memo {
   authorId  Int
   title     String
   context   String   @db.LongText
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt String   @db.Char(23)
+  updatedAt String   @db.Char(23)
   author    User?    @relation(fields: [authorId], references: [id])
   files     File[]
 }
@@ -31,7 +31,7 @@ model File {
   id        Int      @id @default(autoincrement())
   memoId    Int
   url       String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt String   @db.Char(23)
+  updatedAt String   @db.Char(23)
   memo      Memo?    @relation(fields: [memoId], references: [id])
 }
