@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider>
-      <ThemeProvider theme={theme.dark}>
+      <ThemeProvider theme={theme.light}>
         <GlobalStyle/>
         <Component {...pageProps} />
       </ThemeProvider>

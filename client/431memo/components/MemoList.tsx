@@ -1,4 +1,5 @@
 import { memo } from "@pages/api/memo";
+import { Button, ButtonPosition, ButtonWrap } from "@components/BottomButtom";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -6,7 +7,29 @@ import styled, { useTheme } from "styled-components";
 import ContextMenu from "./ContextMenu";
 import Loading from "./Loading";
 import RadiusButton from "./RadiusButton";
-import Wrapper from "./Wrapper";
+
+
+const Selector = styled.div`
+    width:32px; height:32px;
+    border-radius:50%;
+    border:${props => props.theme.border};
+    border-width:2px;
+    background:${props => props.theme.backgroundColor};
+    position:absolute;
+    top:${props => props.theme.space.m};
+    right:${props => props.theme.space.m};
+    justify-content:center;
+    align-items:center;
+    display:none;
+    @media (pointer: coarse) {
+        display:flex;
+    }
+
+    > .material-symbols-outlined {
+        display:none;
+        color:${props => props.theme.backgroundColor};
+    }
+`
 
 const MemoListWrap = styled.div`
     position:relative;
@@ -54,6 +77,26 @@ const MemoItem = styled.li`
     &:before {
         content:''; display:block; padding-bottom:100%;
     }
+
+    &:hover > ${Selector} {
+        display:flex;
+    }
+    &[data-selected="true"] > ${Selector} {
+        display:flex;
+        border:0;
+        background:${props => props.theme.name === 'light' ? props.theme.colors.primary[4] : props.theme.colors.secondary[4]};
+
+        > .material-symbols-outlined {
+            display:block;
+        }
+    }
+    &[data-selected="true"]:after {
+        content:'';
+        position:absolute;
+        top:-1px; left:-1px; right:-1px; bottom:-1px;
+        border:3px solid ${props => props.theme.name === 'light' ? props.theme.colors.primary[4] : props.theme.colors.secondary[4]};
+        border-radius:${props => props.theme.space.b};
+    }
 `
 
 const MemoDetail = styled.div`
@@ -77,31 +120,20 @@ const MemoDetail = styled.div`
     }
 `
 const AddBtnWrap = styled.div`
-    position:sticky;
-    bottom:24px;
-    display:flex;
-    justify-content:flex-end;
-`
-const AddBtn = styled.div`
     padding:0 ${props => props.theme.space.b};
-    .wrapper {
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        width:16px;
-        height:calc(16px + ${props => props.theme.space.b});
-    }
 `
 
 interface Memo {
     context : string
     title : string
     id : number
+    selected : boolean
 }
 
 const MemoList = function() {
     const theme = useTheme();
-    const [memoList, setList]:[Array<Object>|undefined, Function] = useState();
+    const [memoList, setList]:[Array<Memo>|undefined, Function] = useState();
+    const [selectedMemo, setSelectedMemo]:[Array<Memo>, Function] = useState([]);
     const [memos, setMemo]:[Array<any>, Function] = useState([]);
     const [context, setContext] = useState({
         isShow : false,
@@ -109,6 +141,15 @@ const MemoList = function() {
         y : 0,
         id : 0
     });
+
+    const selectHandler = (e:any, list:Array<Memo>) => {
+        const id = Number((e.target as HTMLElement).closest('[data-id]')?.getAttribute('data-id'));
+        const idx = list.findIndex((item:Memo) => item.id === id);
+        list[idx].selected = !list[idx].selected;
+        setList(list);
+        setSelectedMemo(list.filter((item:Memo) => item.selected));
+    }
+
     const getMemo = () => {
         axios({
             url:'/memo/list',
@@ -117,22 +158,40 @@ const MemoList = function() {
                 page:1
             }
         }).then(({data}) => {
-            const list = data ? data : []
+            const list = (data ? data : []).map((item:Memo, idx:number) => {
+                item.selected = false;
+                return item;
+            });
             setList(list);
-            setMemo(list.map((item:Memo) => {
+        });
+    }
+    useEffect(() => {
+        if(memoList !== undefined){
+            const list = JSON.parse(JSON.stringify(memoList));
+            setMemo(memoList.map((item:Memo) => {
                 return (
-                    <MemoItem className="menu-item" key={item.id} data-id={item.id}>
+                    <MemoItem className="menu-item" key={item.id} data-id={item.id} data-selected={item.selected}
+                              onClick={(e) => {
+                                if((e.target as HTMLElement).getAttribute('data-selected') === 'true'){
+                                    selectHandler(e, list);
+                                }
+                              }}>
                         <Link href={`/memo/${item.id}`}>
                             <MemoDetail>
                                 <pre className="context">{item.context}</pre>
                                 <div className="title">{item.title}</div>
                             </MemoDetail>
                         </Link>
+                        <Selector onClick={(e) => {
+                            selectHandler(e, list);
+                        }}>
+                            <p className="material-symbols-outlined icon-24">check</p>
+                        </Selector>
                     </MemoItem>
                 )
             }));
-        });
-    }
+        }
+    },[memoList]);
     useEffect(getMemo, []);
 
     return (
@@ -201,6 +260,7 @@ const MemoList = function() {
                                         id:context.id,
                                         mtd:'delete'
                                     }).then(data => getMemo());
+                                    setSelectedMemo([])
                                     setContext({
                                         isShow : false,
                                         x : 0,
@@ -212,19 +272,57 @@ const MemoList = function() {
                                 null
                             }
                         </MemoWh>
-                        <Link href="/memo/add">
+                        {/* <Link href="/memo/add">
                             <AddBtnWrap>
                                 <AddBtn>
                                     <RadiusButton backgroundColor={theme.name === 'dark' ? theme.colors.secondary[4] : theme.colors.primary[4]}
                                                 color={theme.backgroundColor}>
                                         <div className="wrapper">
-                                            {/* <p className="title">메모 추가</p> */}
                                             <p className="material-symbols-outlined icon-48">add</p>
                                         </div>
                                     </RadiusButton>
                                 </AddBtn>
                             </AddBtnWrap>
-                        </Link>
+                        </Link> */}
+
+                        <ButtonPosition>
+                            <AddBtnWrap>
+                                <ButtonWrap>
+                                    { selectedMemo.length > 0
+                                        ?
+                                        <Button color={theme.name === 'dark' ? "#fff" : theme.colors.danger[4]}
+                                                onClick={() => {
+                                                    axios({
+                                                        url:'/memo/list',
+                                                        data:{
+                                                            ids:selectedMemo.map(item => item.id)
+                                                        },
+                                                        method:'delete'
+                                                    }).then(data => {
+                                                        getMemo()
+                                                        setSelectedMemo([])
+                                                    })
+                                                    setContext({
+                                                        isShow : false,
+                                                        x : 0,
+                                                        y : 0,
+                                                        id : 0
+                                                    })
+                                                }}>
+                                            <p className="material-symbols-outlined">delete</p>
+                                        </Button>
+                                        :
+                                        null
+                                    }
+                                    <Link href="/memo/add">
+                                        <Button backgroundColor={theme.name === 'dark' ? theme.colors.secondary[4] : theme.colors.primary[4]}
+                                                color={theme.backgroundColor}>
+                                            <p className="material-symbols-outlined">add</p>
+                                        </Button>
+                                    </Link>
+                                </ButtonWrap>
+                            </AddBtnWrap>
+                        </ButtonPosition>
                     </>
                 }            
             {/* </Wrapper> */}
