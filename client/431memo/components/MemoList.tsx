@@ -67,6 +67,7 @@ const MemoListUl = styled.ul`
 const MemoItem = styled.li`
     cursor:pointer;
     border-radius:${props => props.theme.space.b};
+    transform:translate3d(0,0,0);
     border:${props => props.theme.border};
     background:${props => props.theme.backgroundColor};
     width:100%;
