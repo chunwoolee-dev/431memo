@@ -15,6 +15,7 @@ const ContextWrap = styled.div<ContextWrap>`
     display:flex;
     gap:${props => props.theme.space.m};
     cursor:pointer;
+    white-space:nowrap;
     &:hover {
         background:${props => props.theme.colors.danger[4]};
         color:#fff;
