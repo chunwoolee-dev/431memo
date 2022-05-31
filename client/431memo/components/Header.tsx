@@ -47,8 +47,8 @@ const Thumbnail = styled.img`
 const Header = () => {
     const [{session, user, err}] = useSession();
     const router = useRouter();
-
     const theme = useTheme();
+    
     return (
         <>
             {router.query['user-detail'] === 'true' ? <UserInfo/> : null}
@@ -56,13 +56,11 @@ const Header = () => {
                 <HeaderSection>
                     <HeaderArea>
                         {router.pathname === '/memo/[id]' ?
-                        <>
-                            <div onClick={router.back}>
-                                <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
-                                    <p className="material-symbols-outlined">keyboard_arrow_left</p>
-                                </RadiusButton>
-                            </div>
-                        </>
+                        <div onClick={router.back}>
+                            <RadiusButton backgroundColor={theme.backgroundColor} color={theme.color}>
+                                <p className="material-symbols-outlined">keyboard_arrow_left</p>
+                            </RadiusButton>
+                        </div>
                         : null}
                         <Title />
                         {/* <div>

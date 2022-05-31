@@ -82,6 +82,9 @@ const common = {
     maxWidth : '880px'
 }
 
+interface Theme {
+    [index: string]: DefaultTheme
+}
 const Theme = {
     light : {
         name : 'light',
@@ -102,7 +105,7 @@ const Theme = {
 }
 
 
-export const theme = {
+export const theme:Theme = {
     light : Object.assign({ colors : colors }, common, Theme.light),
     dark  : Object.assign({ colors : colors }, common, Theme.dark)
 }

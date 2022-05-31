@@ -96,7 +96,7 @@ const Memo:NextPage<Props> = ({data}) => {
                     id:id
                 }, router);
             }
-        }, 500));
+        }, 300));
     }, [title, context]);
 
     return (

@@ -34,9 +34,6 @@ const SessionProvider = (props:any) => {
     useEffect(() => {
         getSession(document.cookie).then(data => {
             setValue({...data});
-            // if(!data.session){
-            //     router.push('/');
-            // }
         });
     }, []);
 

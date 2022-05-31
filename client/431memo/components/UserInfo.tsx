@@ -2,6 +2,7 @@ import { logout, useSession } from "@pages/api/session"
 import { useRouter } from "next/router"
 import styled from "styled-components"
 import Modal from "./Modal"
+import { useMode } from "./Mode"
 
 const Wrapper = styled.div`
     padding:${props => props.theme.space.b};
@@ -70,6 +71,7 @@ const Thumbnail = styled.div`
 const UserInfo = function(){
     const [{session, user, err}, setValue] = useSession();
     const router = useRouter();
+    const {mode, setMode} = useMode();
     
     return (
         <Modal onClose={() => router.replace(router.asPath)}>
@@ -82,6 +84,18 @@ const UserInfo = function(){
             </Wrapper>
 
             <MenuList>
+                <MenuItem onClick={() => {
+                    setMode(mode === 'light' ? 'dark' : 'light');
+                }}>
+                    <Wrapper>
+                        <div className="menu-item-wrap">
+                            <p className="title">
+                                <span className="msg">{mode === 'light' ? '다크모드' : '라이트모드'}</span>
+                            </p>
+                            <span className="material-symbols-outlined icon-16">{mode === 'light' ? 'dark_mode' : 'light_mode'}</span>
+                        </div>
+                    </Wrapper>
+                </MenuItem>
                 <MenuItem onClick={async () => {
                     await logout(router, setValue);
                 }}>

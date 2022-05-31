@@ -1,10 +1,12 @@
 import '@styles/global.scss';
-import GlobalStyle from '@styles/global';
 import type { AppProps } from 'next/app'
-import { ThemeProvider } from "styled-components"
-import { theme } from '@styles/theme'
 import axios from 'axios';
 import SessionProvider from '@components/Session';
+import ModeProvider, { useMode } from '@components/Mode';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '@styles/theme';
+import GlobalStyle from '@styles/global';
+import { useEffect, useState } from 'react';
 
 axios.defaults.baseURL = process.env.SERVER
 axios.defaults.withCredentials = true
@@ -13,10 +15,10 @@ axios.defaults.withCredentials = true
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider>
-      <ThemeProvider theme={theme.light}>
+      <ModeProvider>
         <GlobalStyle/>
         <Component {...pageProps} />
-      </ThemeProvider>
+      </ModeProvider>
     </SessionProvider>
   )
 }
